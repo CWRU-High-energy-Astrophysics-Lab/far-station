@@ -1,3 +1,0 @@
-/home/robin/far-station/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/robin/far-station/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/robin/far-station/cmake-build-debug/CMakeFiles/far_station.dir
