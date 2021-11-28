@@ -8,6 +8,7 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
+#include <utility>
 #include "processmsg.h"
 
 mutex mu;
@@ -19,22 +20,25 @@ bool init() { //set baud rates and check file system layout
     msgToSend = priority_queue<Generalmsg>();
 
     try{
-        filesystem::current_path("/home/pi");
-        filesystem::current_path("/home/pi/data");
-        filesystem::current_path("/home/pi/data/t2");
-        filesystem::current_path("/home/pi/data/t3");
+        filesystem::current_path("/home/$(USER)");
+        filesystem::current_path("/home/$(USER)/data");
+        filesystem::current_path("/home/$(USER)/data/t2");
+        filesystem::current_path("/home/$(USER)/data/t3");
         filesystem::current_path("/home/pi/data/log");
 
-        filesystem::current_path("/home/pi/rsato_su_emu");
-        filesystem::current_path("/home/pi/rsato_su_emu/bin");
-        filesystem::current_path("/home/pi/rsato_su_emu/src");
+        filesystem::current_path("/home/$(USER)/rsato_su_emu");
+        filesystem::current_path("/home/$(USER)/rsato_su_emu/bin");
+        filesystem::current_path("/home/$(USER)/rsato_su_emu/src");
+        system("make");
+
+        filesystem::current_path("/home/$(USER)");
     }
     catch (std::filesystem::filesystem_error const& ex) {
         cout<< "File system not as expected, please check\n";
         return false;
     }
 
-    return 1;
+    return true;
 }
 
 int main() {//this is called on pi boot
@@ -71,9 +75,9 @@ int FarProccess::start() {
             Generalmsg msg = getmsgToProccess();
             string type = msg.gedID();
             if (type == "T3LI") {
-                T3msg *msg = dynamic_cast<T3msg *>(msg);
+                T3msg *newmsg = dynamic_cast<T3msg *>(newmsg);
 
-                t3Time(msg->getPayload()); // calls cdas to send t3 for time
+                t3Time(newmsg->getPayload()); // calls cdas to send t3 for time
 
 
                 //execute t3 collection
@@ -114,7 +118,7 @@ int FarProccess::start() {
                 if (line.starts_with("---")) {
                     T2msg msg(payload);
                     addmsgtoPack(msg);
-                    string payload;
+                     payload.clear();
                 } else {
                     payload.append(line);
                 }
@@ -142,7 +146,7 @@ bool msgtoProccessEmpty() {
 //function to msgToProccess
 void addmsgtoProccess(string incoming) {
 
-    Generalmsg msg = decrypt(incoming);
+    Generalmsg msg = decrypt(std::move(incoming));
     mu.lock();
     msgToProccess.push(msg);
     mu.unlock();
@@ -158,7 +162,7 @@ Generalmsg FarProccess::getmsgToProccess() {
 }
 
 // functions to msgToPack
-void FarProccess::addmsgtoPack(Generalmsg outgoing) {
+void FarProccess::addmsgtoPack(const Generalmsg& outgoing) {
     mu.lock();
     msgToPack.push(outgoing);
     mu.unlock();
@@ -175,7 +179,7 @@ string getmsgToPack() {
 }
 
 //function to msgToSend
-void addmsgtoSend(Generalmsg outgoing) {
+void addmsgtoSend(const Generalmsg& outgoing) {
     mu.lock();
     msgToSend.push(outgoing);
     mu.unlock();
@@ -192,7 +196,7 @@ string getmsgToSend() {
 }
 
 //Functions to msgToUnpack
-void addmsgtoUnpack(Generalmsg incoming) {
+void addmsgtoUnpack(const Generalmsg& incoming) {
     mu.lock();
     msgToUnPack.push(incoming);
     mu.unlock();
@@ -210,70 +214,70 @@ string getmsgToUnpack() {
 
 
 //comands to cdas
-string FarProccess::startCDAS() {
+string FarProccess::startCDAS() const {
     string cmd = "./cdas_su_emu " + std::string(EKITPORT) + " " + std::string(EKITPORT) + " 3000";
-    bashCmd(cmd.c_str());
-    return (cmd.c_str());
+    bashCmd(cmd);
+    return (cmd);
 }
 
-string FarProccess::startDataCollection() {
+string FarProccess::startDataCollection() const {
     string cmd = "./cl s " + string(EKITPORT);
-    bashCmd(cmd.c_str());
+    bashCmd(cmd);
     return (cmd);
 }
 
-string FarProccess::rebootStation() {
+string FarProccess::rebootStation() const {
     string cmd = "./cl r " + string(EKITPORT);
-    bashCmd(cmd.c_str());
+    bashCmd(cmd);
     return (cmd);
 }
 
-string FarProccess::rebootBrodcast() {
+string FarProccess::rebootBrodcast() const {
     string cmd = "./cl R " + string(EKITPORT);
-    bashCmd(cmd.c_str());
+    bashCmd(cmd);
     return (cmd);
 }
 
-string FarProccess::t3Random() {
+string FarProccess::t3Random() const {
     string cmd = "./cl t " + string(EKITPORT);
-    bashCmd(cmd.c_str());
+    bashCmd(cmd);
     return (cmd);
 }
 
-string FarProccess::t3Time(basic_string<char> time) {
+string FarProccess::t3Time(const basic_string<char>& time) const {
     string cmd = "./cl T " + time + " " + string(EKITPORT);
-    bashCmd(cmd.c_str());
+    bashCmd(cmd);
     return (cmd);
 }
 
-string FarProccess::os9cmd(string input) {
+string FarProccess::os9cmd(const string& input) const {
     string cmd = "./cl c " + input + " " + string(EKITPORT);
-    bashCmd(cmd.c_str());
+    bashCmd(cmd);
     return (cmd);
 }
 
-string FarProccess::stopCDAS() {
+string FarProccess::stopCDAS() const {
     string cmd = "./cl S " + string(EKITPORT);
-    bashCmd(cmd.c_str());
+    bashCmd(cmd);
     return (cmd);
 }
 
 
 //piCommand
-int FarProccess::bashCmd(string cmd) {
+int FarProccess::bashCmd(const string& cmd) {
     return system(cmd.c_str());
 }
 
 
-string encrypt(Generalmsg generalmsg) {
+string encrypt(const Generalmsg& generalmsg) {
     return string(generalmsg.gedID() + "[" + generalmsg.getRev() + "]:" + to_string(generalmsg.getSize()) +
                   generalmsg.getPayload());
 }
 
-Generalmsg decrypt(string input) {
+Generalmsg decrypt(const string& input) {
     Generalmsg msg;
     string type = input.substr(0, 3);
-    int headerend = input.find(':');
+    unsigned long headerend = input.find(':');
     string payload = input.substr(headerend);
     if (type == "T3LI") {
         msg = T3msg(payload);

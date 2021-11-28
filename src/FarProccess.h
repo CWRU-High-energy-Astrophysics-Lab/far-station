@@ -27,8 +27,8 @@ priority_queue<Generalmsg> msgToSend;
 priority_queue<Generalmsg> msgToUnPack
 ;
 bool msgtoProccessEmpty();
-string encrypt(Generalmsg msg) ;
-Generalmsg decrypt(string msg);
+string encrypt(const Generalmsg& msg) ;
+Generalmsg decrypt(const string& msg);
 bool send_t3();
 
 bool fpt();
@@ -43,24 +43,24 @@ public:
 int start();
 
 //comands to cdas
-string startCDAS();
-string startDataCollection();
-string rebootStation();
-string rebootBrodcast();
-string t3Random();
-string t3Time(basic_string<char> time);
-string os9cmd(string cmd);
-string stopCDAS();
+string startCDAS() const;
+string startDataCollection() const;
+string rebootStation() const;
+string rebootBrodcast() const;
+string t3Random() const;
+string t3Time(const basic_string<char>& time) const;
+string os9cmd(const string& cmd) const;
+string stopCDAS() const;
 
 
 
-Generalmsg getmsgToProccess();
-void addmsgtoPack(Generalmsg outgoing);
+static Generalmsg getmsgToProccess();
+static void addmsgtoPack(const Generalmsg& outgoing);
 
 
 
 //piCommand
-int bashCmd(string cmd);
+static int bashCmd(const string& cmd);
 
 
 
