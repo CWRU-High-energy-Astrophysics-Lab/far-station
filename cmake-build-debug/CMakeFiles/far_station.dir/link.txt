@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/far_station.dir/main.cpp.o -o far_station 
