@@ -9,8 +9,8 @@
 class MsgHistory: public Generalmsg{
 public:
     MsgHistory();
-    MsgHistory(string payload);
-    void addMSG(string id, int size );
+    explicit MsgHistory(string payload);
+    void addMSG(const string& id, int size );
 
 
 

@@ -8,7 +8,7 @@
 
 class T2msg : public Generalmsg{
 public:
-    T2msg(string payload);
+    explicit T2msg(string payload);
 
 
 };

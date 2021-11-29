@@ -4,8 +4,10 @@
 
 #include "T2msg.h"
 
+#include <utility>
+
 using namespace std;
-T2msg::T2msg(string payload) : Generalmsg("T2LI", "rev1", payload,9) {
+T2msg::T2msg(string payload) : Generalmsg("T2LI", "rev1", std::move(payload),9) {
 
 
 }

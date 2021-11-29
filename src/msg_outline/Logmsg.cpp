@@ -4,8 +4,10 @@
 
 #include "Logmsg.h"
 
+#include <utility>
+
 using namespace std;
-Logmsg::Logmsg( string payload) : Generalmsg("LOGA", "rev1", payload,1) {
+Logmsg::Logmsg( string payload) : Generalmsg("LOGA", "rev1", std::move(payload),1) {
 
 
 }

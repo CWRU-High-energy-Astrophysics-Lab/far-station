@@ -4,7 +4,9 @@
 
 #include "Generalmsg.h"
 
-int Generalmsg::getSize() const {
+#include <utility>
+
+unsigned long Generalmsg::getSize() const {
     return payload.length(); //one character is one byte
 }
 
@@ -17,9 +19,9 @@ string Generalmsg::getRev() const {
 }
 
 Generalmsg::Generalmsg(string id, string rev, string payload, int weight) {
-    this->id = id;
-    this->rev = rev;
-    this->payload = payload;
+    this->id = std::move(id);
+    this->rev = std::move(rev);
+    this->payload = std::move(payload);
     this->weight =weight;
 
 }
@@ -28,9 +30,7 @@ string Generalmsg::getPayload() const {
     return payload;
 }
 
-Generalmsg::Generalmsg() {
-
-}
+Generalmsg::Generalmsg() = default;
 
 int Generalmsg::getweight() const{
     return weight;

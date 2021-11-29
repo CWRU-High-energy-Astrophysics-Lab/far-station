@@ -8,7 +8,7 @@
 
 class Logmsg : public Generalmsg{
 public:
-    Logmsg(string payload);
+    explicit Logmsg(string payload);
 
 };
 

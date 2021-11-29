@@ -10,11 +10,11 @@ using namespace std;
 class Generalmsg {
 public:
     Generalmsg();
-    int getweight() const;
-    string gedID() const;
-    string getRev() const;
-    int getSize() const; // in bytes
-    virtual string getPayload() const;
+    [[nodiscard]] int getweight() const;
+    [[nodiscard]] string gedID() const;
+    [[nodiscard]] string getRev() const;
+    [[nodiscard]] unsigned long getSize() const; // in bytes
+    [[nodiscard]] virtual string getPayload() const;
 
 
 
@@ -43,7 +43,7 @@ private:
     string id;
     string rev;
     string payload;
-    int weight;
+    int weight{};
 
 
 

@@ -37,20 +37,20 @@ public:
 
     char *const EKITPORT = getenv("EKITPORT"); //enviormental varible
 
-    int USB;
+    int USB{};
 
 
 int start();
 
 //comands to cdas
-string startCDAS() const;
-string startDataCollection() const;
-string rebootStation() const;
-string rebootBrodcast() const;
-string t3Random() const;
-string t3Time(const basic_string<char>& time) const;
-string os9cmd(const string& cmd) const;
-string stopCDAS() const;
+[[nodiscard]] string startCDAS() const;
+[[nodiscard]] string startDataCollection() const;
+[[nodiscard]] string rebootStation() const;
+[[nodiscard]] string rebootBrodcast() const;
+[[nodiscard]] string t3Random() const;
+[[nodiscard]] string t3Time(const basic_string<char>& time) const;
+[[nodiscard]] string os9cmd(const string& cmd) const;
+[[nodiscard]] string stopCDAS() const;
 
 
 

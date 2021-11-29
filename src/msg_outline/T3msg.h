@@ -8,7 +8,7 @@
 
 class T3msg : public Generalmsg{
 public:
-    T3msg(string payload);
+    explicit T3msg(string payload);
 
 };
 
