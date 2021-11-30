@@ -10,7 +10,7 @@ CMakeFiles/far_station.dir/src/FarProccess.cpp.o: \
  ../src/msg_outline/MsgHistory.h \
  ../src/msg_outline/T2msg.h \
  ../src/msg_outline/T3msg.h \
- ../src/processmsg.h \
+ ../src/packinterface.h \
  ../src/t2li.h
 CMakeFiles/far_station.dir/src/msg_outline/Cmdmsg.cpp.o: \
  ../src/msg_outline/Cmdmsg.cpp \

@@ -23,8 +23,8 @@
 using namespace std;
 priority_queue<Generalmsg> msgToProccess;
 priority_queue<Generalmsg> msgToPack;
-priority_queue<Generalmsg> msgToSend;
-priority_queue<Generalmsg> msgToUnPack
+priority_queue<string> msgToSend;
+priority_queue<string> msgToUnPack
 ;
 bool msgtoProccessEmpty();
 string encrypt(const Generalmsg& msg) ;

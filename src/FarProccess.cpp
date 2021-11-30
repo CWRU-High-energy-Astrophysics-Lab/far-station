@@ -9,15 +9,15 @@
 #include <fstream>
 #include <filesystem>
 #include <utility>
-#include "processmsg.h"
+#include "packinterface.h"
 
 mutex mu;
 
 bool init() { //set baud rates and check file system layout
     msgToProccess = priority_queue<Generalmsg>();
     msgToPack = priority_queue<Generalmsg>();
-    msgToUnPack = priority_queue<Generalmsg>();
-    msgToSend = priority_queue<Generalmsg>();
+    msgToUnPack = priority_queue<string>();
+    msgToSend = priority_queue<string>();
 
     try{
         filesystem::current_path("/home/$(USER)");
@@ -118,7 +118,7 @@ int FarProccess::start() {
                 if (line.starts_with("---")) {
                     T2msg msg(payload);
                     addmsgtoPack(msg);
-                     payload.clear();
+                    payload.clear();
                 } else {
                     payload.append(line);
                 }
@@ -179,7 +179,7 @@ string getmsgToPack() {
 }
 
 //function to msgToSend
-void addmsgtoSend(const Generalmsg& outgoing) {
+void addmsgtoSend(string outgoing) {
     mu.lock();
     msgToSend.push(outgoing);
     mu.unlock();
@@ -188,7 +188,7 @@ void addmsgtoSend(const Generalmsg& outgoing) {
 
 string getmsgToSend() {
     mu.lock();
-    string pack = encrypt(msgToSend.top());
+    string pack = msgToSend.top();
     msgToSend.pop();
     mu.unlock();
     return pack;
@@ -196,8 +196,9 @@ string getmsgToSend() {
 }
 
 //Functions to msgToUnpack
-void addmsgtoUnpack(const Generalmsg& incoming) {
+void addmsgtoUnpack(string incoming) {
     mu.lock();
+
     msgToUnPack.push(incoming);
     mu.unlock();
 
@@ -205,7 +206,7 @@ void addmsgtoUnpack(const Generalmsg& incoming) {
 
 string getmsgToUnpack() {
     mu.lock();
-    string pack = encrypt(msgToUnPack.top());
+    string pack =msgToUnPack.top();
     msgToUnPack.pop();
     mu.unlock();
     return pack;

@@ -23,8 +23,8 @@ filesystem
 -
 utility
 -
-processmsg.h
-/home/robin/far-station/src/processmsg.h
+packinterface.h
+/home/robin/far-station/src/packinterface.h
 
 /home/robin/far-station/src/FarProccess.h
 iostream
@@ -74,7 +74,7 @@ Generalmsg.h
 Generalmsg.h
 /home/robin/far-station/src/msg_outline/Generalmsg.h
 
-/home/robin/far-station/src/processmsg.h
+/home/robin/far-station/src/packinterface.h
 
 /home/robin/far-station/src/t2li.h
 

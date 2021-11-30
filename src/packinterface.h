@@ -8,3 +8,5 @@
 #endif //FAR_STATION_ROBIN_PROCESSMSG_H
 void addmsgtoProccess(string incoming);
 string getmsgToPack();
+string getmsgToUnpack();
+void addmsgtoSend(string outgoing);
