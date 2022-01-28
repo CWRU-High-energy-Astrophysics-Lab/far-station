@@ -9,6 +9,8 @@ using namespace std;
 
 class Generalmsg {
 public:
+
+
     Generalmsg();
     [[nodiscard]] int getweight() const;
     [[nodiscard]] string gedID() const;

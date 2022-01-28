@@ -88,7 +88,7 @@ int FarProccess::start() {
 
                 //execute t3 collection
                 send_t3();
-
+                delete msg;
             } else if (type.substr(0, 2) == "CMD") {
                 Cmdmsg *msg = dynamic_cast<Cmdmsg *>(msg);
                 if (msg->gedID() == "CMDB") {// is os9 command
@@ -98,19 +98,26 @@ int FarProccess::start() {
                 } else {
                     bashCmd(msg->getPayload());
                 }
+                delete msg;
             } else if (type == "HIST") {
                 MsgHistory *msg = dynamic_cast<MsgHistory *>(msg);
                 //history request, send history
+                delete msg;
             } else if (type == "T2LI") {
                 T2msg *msg = dynamic_cast<T2msg *>(msg);
                 //should not be here, report to log
+                delete msg;
             } else if (type == "LOGA") {
                 Logmsg *msg = dynamic_cast<Logmsg *>(msg);
                 // log request, send log file.
+                delete msg;
             } else {
                 Generalmsg *msg = msg;
                 //add a report to log
+
+                delete msg;
             }
+
         }
         // get t2 file
         filesystem::current_path("/home/$(USER)/rsato_su_emu/bin");

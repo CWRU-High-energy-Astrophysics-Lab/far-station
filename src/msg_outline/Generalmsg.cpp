@@ -35,3 +35,5 @@ Generalmsg::Generalmsg() = default;
 int Generalmsg::getweight() const{
     return weight;
 }
+
+
