@@ -9,14 +9,14 @@
 #include <unistd.h> // write(), read(), close()
 #include <cstring>
 struct termios tty;
-const char *port="/dev/Xbee";
+string port="/dev/Xbee";
 
 int xbee_port;
 bool startXbee(){
 
     //ste up interface
 
-    xbee_port = open(port, O_RDWR);
+    xbee_port = open(port.c_str(), O_RDWR);
 
 // Check for errors
     if (xbee_port < 0) {
