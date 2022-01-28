@@ -50,7 +50,7 @@ bool xbeeLoop(){
         auto msg = getmsgToSend();
         write(xbee_port,msg.c_str(), size(msg));
 
-
+        //need to parse read buffer
 
 
     }
