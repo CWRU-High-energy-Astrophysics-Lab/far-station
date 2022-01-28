@@ -41,7 +41,7 @@ bool startXbee(){
 
 
 bool xbeeLoop(){
-    while(!restartingpi){
+    while(getRestart()){
         // kyle code here
         /* write command: write(xbee_port, msg, sizeof(msg))
          * read command:
@@ -54,4 +54,5 @@ bool xbeeLoop(){
 
 
     }
+    return false;
 }

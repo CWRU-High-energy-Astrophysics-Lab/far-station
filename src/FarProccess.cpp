@@ -14,7 +14,10 @@
 
 
 mutex mu;
-
+bool restartingpi = false;
+bool getRestart(){
+    return restartingpi;
+}
 bool init() { //set baud rates and check file system layout
     msgToProccess = priority_queue<Generalmsg>();
     msgToPack = priority_queue<Generalmsg>();
