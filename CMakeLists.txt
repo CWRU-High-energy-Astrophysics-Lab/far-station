@@ -20,4 +20,5 @@ add_executable(far_station src/msg_outline/T2msg.cpp
         src/FarProccess.cpp
         src/FarProccess.h
         src/t2li.h
-        src/xbeeinterface.h)
+        src/xbeeinterface.h
+        src/xbeeproccess.cpp)

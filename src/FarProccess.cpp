@@ -10,6 +10,8 @@
 #include <filesystem>
 #include <utility>
 #include "packinterface.h"
+#include "xbeeinterface.h"
+
 
 mutex mu;
 
@@ -47,7 +49,9 @@ int main() {//this is called on pi boot
         thread processThread(fpt);
 
         //Xbee thread
+        thread xbeeThread(startXbee);
 
+        xbeeThread.join();
         processThread.join();
 
 
@@ -69,15 +73,15 @@ bool fpt() {
 }
 
 int FarProccess::start() {
-    bool restartingpi = false;
+
     while (!restartingpi) {
         if (!msgtoProccessEmpty()) {
             Generalmsg msg = getmsgToProccess();
             string type = msg.gedID();
             if (type == "T3LI") {
-                T3msg *newmsg = dynamic_cast<T3msg *>(newmsg);
+                T3msg *msg = dynamic_cast<T3msg *>(msg);
 
-                t3Time(newmsg->getPayload()); // calls cdas to send t3 for time
+                t3Time(msg->getPayload()); // calls cdas to send t3 for time
 
 
                 //execute t3 collection
@@ -107,6 +111,7 @@ int FarProccess::start() {
             }
         }
         // get t2 file
+        filesystem::current_path("/home/$(USER)/rsato_su_emu/bin");
         bashCmd("cp T2_list.out T2_toSend.out");
         bashCmd("rm T2_list.out");
 
@@ -125,6 +130,7 @@ int FarProccess::start() {
             }
             t2File.close();
         }
+        filesystem::current_path("/home/$(USER)");
 
 
     }
@@ -133,6 +139,8 @@ int FarProccess::start() {
 
 bool send_t3(){
     int size =0;
+
+    //read and put into general msg
     return true;
 }
 
