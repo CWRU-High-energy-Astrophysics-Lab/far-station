@@ -47,12 +47,13 @@ bool xbeeLoop(){
          * read command:
          * char read_buf [256]
          * int n = read(serial_port, &read_buf, sizeof(read_buf)); */
-
-
+        auto msg = getmsgToSend();
+        write(xbee_port,msg.c_str(), size(msg));
 
 
 
 
     }
+    close(xbee_port);
     return false;
 }

@@ -59,7 +59,6 @@ int main() {//this is called on pi boot
 
 
 
-//start theads
 
 
 
