@@ -15,6 +15,7 @@
 
 mutex mu;
 bool restartingpi = false;
+string user;
 bool getRestart(){
     return restartingpi;
 }
@@ -23,20 +24,20 @@ bool init() { //set baud rates and check file system layout
     msgToPack = priority_queue<Generalmsg>();
     msgToUnPack = priority_queue<string>();
     msgToSend = priority_queue<string>();
-
+     user= "/home/"+ string(getenv("USER"));
     try{
-        filesystem::current_path("/home/$(USER)");
-        filesystem::current_path("/home/$(USER)/data");
-        filesystem::current_path("/home/$(USER)/data/t2");
-        filesystem::current_path("/home/$(USER)/data/t3");
-        filesystem::current_path("/home/pi/data/log");
+        filesystem::current_path(user);
+        filesystem::current_path(user+"/data");
+        filesystem::current_path(user+"/data/t2");
+        filesystem::current_path(user+"/data/t3");
+        filesystem::current_path(user+"/data/log");
 
-        filesystem::current_path("/home/$(USER)/rsato_su_emu");
-        filesystem::current_path("/home/$(USER)/rsato_su_emu/bin");
-        filesystem::current_path("/home/$(USER)/rsato_su_emu/src");
+        filesystem::current_path(user+"/rsato_su_emu");
+        filesystem::current_path(user+"/rsato_su_emu/bin");
+        filesystem::current_path(user+"/rsato_su_emu/src");
         system("make");
 
-        filesystem::current_path("/home/$(USER)");
+        filesystem::current_path(user);
     }
     catch (std::filesystem::filesystem_error const& ex) {
         cout<< "File system not as expected, please check\n";
@@ -120,9 +121,9 @@ int FarProccess::start() {
 
         }
         // get t2 file
-        filesystem::current_path("/home/$(USER)/rsato_su_emu/bin");
-        bashCmd("cp T2_list.out T2_toSend.out");
-        bashCmd("rm T2_list.out");
+        filesystem::current_path(user+"/rsato_su_emu/bin");
+        system("cat T2_list.out >> T2_toSend.out");
+        system("rm T2_list.out");
 
         string line;
         ifstream t2File("T2_toSend.out");
@@ -139,7 +140,7 @@ int FarProccess::start() {
             }
             t2File.close();
         }
-        filesystem::current_path("/home/$(USER)");
+        filesystem::current_path(user);
 
 
     }
