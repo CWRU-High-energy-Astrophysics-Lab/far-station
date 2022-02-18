@@ -11,11 +11,13 @@
 #include <utility>
 #include "packinterface.h"
 #include "xbeeinterface.h"
+#include "cdasinterface.h"
 
 
 mutex mu;
 bool restartingpi = false;
 string user;
+
 bool getRestart(){
     return restartingpi;
 }
@@ -180,7 +182,8 @@ Generalmsg FarProccess::getmsgToProccess() {
 }
 
 // functions to msgToPack
-void FarProccess::addmsgtoPack(const Generalmsg& outgoing) {
+
+void addmsgtoPack(const Generalmsg& outgoing) {
     mu.lock();
     msgToPack.push(outgoing);
     mu.unlock();

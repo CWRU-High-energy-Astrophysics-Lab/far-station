@@ -15,6 +15,7 @@
 #include "msg_outline/Logmsg.h"
 
 
+
 #ifndef FAR_STATION_ROBIN_EAD_H
 #define FAR_STATION_ROBIN_EAD_H
 
@@ -55,6 +56,8 @@ int start();
 
 
 static Generalmsg getmsgToProccess();
+
+
 static void addmsgtoPack(const Generalmsg& outgoing);
 
 
