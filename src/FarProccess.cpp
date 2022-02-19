@@ -2,7 +2,7 @@
 // Created by robin on 10/21/21.
 //
 #include "t2li.h"
-#include "FarProccess.h"
+#include "FarProccess.hpp"
 #include <mutex>
 #include <thread>
 #include <iostream>
@@ -11,7 +11,7 @@
 #include <utility>
 #include "packinterface.h"
 #include "xbeeinterface.h"
-#include "cdasinterface.h"
+
 
 
 mutex mu;
@@ -53,7 +53,7 @@ int main() {//this is called on pi boot
     if (init()) {
 
         thread processThread(fpt);
-
+        thread cdasThread(cdas_su_emu_main);
         //Xbee thread
         thread xbeeThread(startXbee);
 
@@ -123,25 +123,7 @@ int FarProccess::start() {
 
         }
         // get t2 file
-        filesystem::current_path(user+"/rsato_su_emu/bin");
-        system("cat T2_list.out >> T2_toSend.out");
-        system("rm T2_list.out");
-
-        string line;
-        ifstream t2File("T2_toSend.out");
-        string payload;
-        if (t2File.is_open()) {
-            while (getline(t2File, line)) {
-                if (line.starts_with("---")) {
-                    T2msg msg(payload);
-                    addmsgtoPack(msg);
-                    payload.clear();
-                } else {
-                    payload.append(line);
-                }
-            }
-            t2File.close();
-        }
+        addmsgtoPack(getT2Fromcdas());
         filesystem::current_path(user);
 
 
@@ -183,9 +165,9 @@ Generalmsg FarProccess::getmsgToProccess() {
 
 // functions to msgToPack
 
-void addmsgtoPack(const Generalmsg& outgoing) {
+void FarProccess::addmsgtoPack(const char msg[]) {
     mu.lock();
-    msgToPack.push(outgoing);
+    msgToPack.push(T2msg(msg));
     mu.unlock();
 
 };

@@ -6,13 +6,13 @@
 #define FAR_STATION_ROBIN_XBEEINTERFACE_H
 #include <string>
 #endif //FAR_STATION_ROBIN_XBEEINTERFACE_H
-using namespace std;
+
 
 //returns next msg needed to be sent
-string getmsgToSend();
+std::string getmsgToSend();
 
 // add incoming msg to queue to be unpacked and process
-void addmsgtoUnpack(string incoming);
+void addmsgtoUnpack(std::string incoming);
 bool startXbee();
 
 bool getRestart();

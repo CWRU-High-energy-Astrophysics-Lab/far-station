@@ -1,4 +1,4 @@
-/snap/clion/180/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/snap/clion/180/bin/ninja/linux/ninja -G Ninja /home/robin/CLionProjects/far-station
+/snap/clion/180/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/snap/clion/180/bin/ninja/linux/ninja -G Ninja /home/robin/far-station
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/robin/CLionProjects/far-station/cmake-build-debug
+-- Build files have been written to: /home/robin/far-station/cmake-build-debug

@@ -13,7 +13,9 @@
 #include "msg_outline/Cmdmsg.h"
 #include "msg_outline/MsgHistory.h"
 #include "msg_outline/Logmsg.h"
-
+extern "C"{
+#include "../rsato_su_emu/src/cdas_calls.h"
+}
 
 
 #ifndef FAR_STATION_ROBIN_EAD_H
@@ -33,9 +35,11 @@ Generalmsg decrypt(const string& msg);
 bool send_t3();
 
 bool fpt();
+
+
 class FarProccess{
 public:
-
+    static void addmsgtoPack(const char msg[]);
     char *const EKITPORT = getenv("EKITPORT"); //enviormental varible
 
     int USB{};
@@ -58,7 +62,7 @@ int start();
 static Generalmsg getmsgToProccess();
 
 
-static void addmsgtoPack(const Generalmsg& outgoing);
+
 
 
 

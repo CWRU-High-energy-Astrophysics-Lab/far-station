@@ -6,5 +6,7 @@
 #define FAR_STATION_CDAS_CALLS_H
 
 #endif //FAR_STATION_CDAS_CALLS_H
-int cdas_su_emu_main(int argc,char *argv[]);
+int cdas_su_emu_main();
+
+char* getT2Fromcdas();
 

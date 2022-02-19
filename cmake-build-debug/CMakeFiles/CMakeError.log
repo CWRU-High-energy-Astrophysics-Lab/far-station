@@ -1,15 +1,15 @@
 Performing C SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD failed with the following output:
-Change Dir: /home/robin/CLionProjects/far-station/cmake-build-debug/CMakeFiles/CMakeTmp
+Change Dir: /home/robin/far-station/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/snap/clion/180/bin/ninja/linux/ninja cmTC_8bc81 && [1/2] Building C object CMakeFiles/cmTC_8bc81.dir/src.c.o
-[2/2] Linking C executable cmTC_8bc81
-FAILED: cmTC_8bc81 
-: && /usr/bin/cc   CMakeFiles/cmTC_8bc81.dir/src.c.o -o cmTC_8bc81   && :
-/usr/bin/ld: CMakeFiles/cmTC_8bc81.dir/src.c.o: in function `main':
+Run Build Command(s):/snap/clion/180/bin/ninja/linux/ninja cmTC_62843 && [1/2] Building C object CMakeFiles/cmTC_62843.dir/src.c.o
+[2/2] Linking C executable cmTC_62843
+FAILED: cmTC_62843 
+: && /bin/cc   CMakeFiles/cmTC_62843.dir/src.c.o -o cmTC_62843   && :
+/bin/ld: CMakeFiles/cmTC_62843.dir/src.c.o: in function `main':
 src.c:(.text+0x46): undefined reference to `pthread_create'
-/usr/bin/ld: src.c:(.text+0x52): undefined reference to `pthread_detach'
-/usr/bin/ld: src.c:(.text+0x5e): undefined reference to `pthread_cancel'
-/usr/bin/ld: src.c:(.text+0x6f): undefined reference to `pthread_join'
+/bin/ld: src.c:(.text+0x52): undefined reference to `pthread_detach'
+/bin/ld: src.c:(.text+0x5e): undefined reference to `pthread_cancel'
+/bin/ld: src.c:(.text+0x6f): undefined reference to `pthread_join'
 collect2: error: ld returned 1 exit status
 ninja: build stopped: subcommand failed.
 
@@ -36,13 +36,13 @@ int main(void)
 }
 
 Determining if the function pthread_create exists in the pthreads failed with the following output:
-Change Dir: /home/robin/CLionProjects/far-station/cmake-build-debug/CMakeFiles/CMakeTmp
+Change Dir: /home/robin/far-station/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/snap/clion/180/bin/ninja/linux/ninja cmTC_5c920 && [1/2] Building C object CMakeFiles/cmTC_5c920.dir/CheckFunctionExists.c.o
-[2/2] Linking C executable cmTC_5c920
-FAILED: cmTC_5c920 
-: && /usr/bin/cc -DCHECK_FUNCTION_EXISTS=pthread_create  CMakeFiles/cmTC_5c920.dir/CheckFunctionExists.c.o -o cmTC_5c920  -lpthreads && :
-/usr/bin/ld: cannot find -lpthreads
+Run Build Command(s):/snap/clion/180/bin/ninja/linux/ninja cmTC_14d4d && [1/2] Building C object CMakeFiles/cmTC_14d4d.dir/CheckFunctionExists.c.o
+[2/2] Linking C executable cmTC_14d4d
+FAILED: cmTC_14d4d 
+: && /bin/cc -DCHECK_FUNCTION_EXISTS=pthread_create  CMakeFiles/cmTC_14d4d.dir/CheckFunctionExists.c.o -o cmTC_14d4d  -lpthreads && :
+/bin/ld: cannot find -lpthreads
 collect2: error: ld returned 1 exit status
 ninja: build stopped: subcommand failed.
 
