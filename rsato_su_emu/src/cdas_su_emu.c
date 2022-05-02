@@ -6,6 +6,7 @@
 
 #include "sockets.h"
 
+
 #include <sys/select.h>
 #include <sys/time.h>
 #include <sys/types.h>
@@ -18,9 +19,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "cqueue.h"
 
 #define MAX_CLIENTS 5
 #define REBOOT_PERIOD 600
+
+ char t2buffer[20][0];
+
+node_t *t2q= NULL;
+char* id="66";
+char* port="/dev/EKIT";
 
 void use_as(char *cmd)
 {
@@ -123,7 +131,7 @@ int data_from_ub(struct ub_io_ctrl *ub,struct cdas_emu_str *cdas,
 	      t3req_random(&(cdas->t3req),t2s,dt);
 	      send_cmd(ub,dt,cdas->st_id);
 	    }
-        char catmsg[0];
+        char catmsg[100];
 	    if(j>0 && cdas->t2out!=NULL){
 	      fprintf(catmsg,"Sec,nt2,scaler: %d %d %d\n",
 		      t2s->second,t2s->nt2,t2s->scaler);
@@ -135,6 +143,7 @@ int data_from_ub(struct ub_io_ctrl *ub,struct cdas_emu_str *cdas,
               strcat(catmsg,("%d %d:%d\n",
                      j,t2s->t2[j].tr_type,t2s->t2[j].usec));
 	      }
+          enqueue(t2q,catmsg);
 	      fprintf(cdas->t2out,"---\n"); // this is the line I need
           //T2msg newmsg= T2msg(catmsg);
 
@@ -168,7 +177,8 @@ int data_from_ub(struct ub_io_ctrl *ub,struct cdas_emu_str *cdas,
 
 
 
-int cdas_su_emu_main(int argc,char *argv[])
+
+int cdas_su_emu_main()
 {
   struct ub_io_ctrl ub;
   struct cdas_emu_str cdas;
@@ -194,25 +204,19 @@ int cdas_su_emu_main(int argc,char *argv[])
   cdas_emu_init(&cdas);
   msg.msg=(unsigned char *)malloc(102400);
 
-  if(argc<4 || 
-     (argc==2 && 
-      (strcmp(argv[1],"-h")==0 ||
-       strcmp(argv[1],"-?")==0 ||
-       strcmp(argv[1],"-help")==0 ||
-       strcmp(argv[1],"--help")==0)))
-    use_as(argv[0]);
+
   
 
-  rid=atoi(argv[3]);
-  ub.fd_in=open(argv[1],O_RDONLY);
-  ub.fd_out=open(argv[2],O_WRONLY);
+  rid=atoi("66");
+  ub.fd_in=open(port,O_RDONLY);
+  ub.fd_out=open(port,O_WRONLY);
   printf(".... %d %d\n",ub.fd_in,ub.fd_out);
   if(isatty(ub.fd_in) && isatty(ub.fd_out)){
     close(ub.fd_in);
     close(ub.fd_out);    
-    ub=ub_io_init(argv[1],rid,B38400); /* device and radio id */ 
+    ub=ub_io_init(port,rid,B38400); /* device and radio id */
   } else {
-    ub=ub_io_init_fifo(argv[1],argv[2],rid); /* device and radio id */
+    ub=ub_io_init_fifo(port,port,rid); /* device and radio id */
   } 
 
   serv_ctrl=make_socket_server ("localhost",20000);
@@ -335,4 +339,8 @@ int cdas_su_emu_main(int argc,char *argv[])
     timeout.tv_usec=0;
     
   }
+
+}
+char* getT2Fromcdas(){
+    return dequeue(t2q);
 }

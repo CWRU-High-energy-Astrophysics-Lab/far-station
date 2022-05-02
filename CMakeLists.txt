@@ -18,7 +18,7 @@ add_executable(far_station src/msg_outline/T2msg.cpp
         src/msg_outline/Cmdmsg.cpp
         src/msg_outline/augermsg.h
         src/FarProccess.cpp
-        src/FarProccess.h
+        src/FarProccess.hpp
         src/t2li.h
         src/xbeeinterface.h
         src/xbeeproccess.cpp
@@ -42,9 +42,8 @@ add_executable(far_station src/msg_outline/T2msg.cpp
         rsato_su_emu/src/ub_side.c
         rsato_su_emu/src/ub_side.h
         rsato_su_emu/src/cdas_calls.h
-        src/cdasinterface.h
 
-        )
+        rsato_su_emu/src/cqueue.h)
 
 
 
