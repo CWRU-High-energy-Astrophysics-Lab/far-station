@@ -1,119 +1,108 @@
-#include <cstdio>
-#include <cstdlib>
 
-
-#include <iostream>
-#include <cstring>
-#include <fstream>
+// Created by robin on 1/28/22.
+//
 #include "xbeeinterface.h"
 
 
+#include <cstring>
 
 
-char byte[40]; //40 is an arbitray number which I choosed. I am sending line by line, so 40 would be enough.
-char B1[40]; //B1 and B2 should be same size as byte.
-char B2[40];
-char empty[40] = {0,};
+int xbee_port;
 
-int bm = 1; //buffer mode. Either 1 or 2.
-int s = 1; //Sending mode.
+#include <stdio.h>
+#include <string.h>
+
+// Linux headers
+#include <fcntl.h> // Contains file controls like O_RDWR
+#include <errno.h> // Error integer and strerror() function
+#include <termios.h> // Contains POSIX terminal control definitions
+#include <unistd.h> // write(), read(), close()
+
+#include <thread>
+
+std::string port = "/dev/Xbee";
+using std::thread;
+
+int serial_port;
+struct termios tty;
+int s = 1; //sending mode. s==0 when sleeping mode.
+
 int n = 0;
 
-char T2all_l[1000][40]; // Number of lines in rT2.txt should not exceed 1000!
+int bm = 1; //buffer mode. Either 1 or 2.
+int tsize = 0;
 
-/*
-void combineT2(int n, char *buffer)
+
+bool setup() {
+    if(tcgetattr(serial_port, &tty) != 0)
+    {
+        printf("Error %i from tcgetattr: %s\n", errno, strerror(errno));
+        //return 1;
+    }
+
+    tty.c_cflag &= ~PARENB; // Clear parity bit, disabling parity (most common)
+    tty.c_cflag &= ~CSTOPB; // Clear stop field, only one stop bit used in communication (most common)
+    tty.c_cflag &= ~CSIZE; // Clear all bits that set the data size
+    tty.c_cflag |= CS8; // 8 bits per byte (most common)
+    tty.c_cflag &= ~CRTSCTS; // Disable RTS/CTS hardware flow control (most common)
+    tty.c_cflag |= CREAD | CLOCAL; // Turn on READ & ignore ctrl lines (CLOCAL = 1)
+
+    tty.c_lflag &= ICANON;
+    tty.c_lflag &= ~ECHO; // Disable echo
+    tty.c_lflag &= ~ECHOE; // Disable erasure
+    tty.c_lflag &= ~ECHONL; // Disable new-line echo
+    tty.c_lflag &= ~ISIG; // Disable interpretation of INTR, QUIT and SUSP
+    tty.c_iflag &= ~(IXON | IXOFF | IXANY); // Turn off s/w flow ctrl
+    tty.c_iflag &= ~(IGNBRK|BRKINT|PARMRK|ISTRIP|INLCR|IGNCR|ICRNL); // Disable any special handling of received bytes
+
+    tty.c_oflag &= ~OPOST; // Prevent special interpretation of output bytes (e.g. newline chars)
+    tty.c_oflag &= ~ONLCR; // Prevent conversion of newline to carriage return/line feed
+    // tty.c_oflag &= ~OXTABS; // Prevent conversion of tabs to spaces (NOT PRESENT ON LINUX)
+    // tty.c_oflag &= ~ONOEOT; // Prevent removal of C-d chars (0x004) in output (NOT PRESENT ON LINUX)
+
+    tty.c_cc[VTIME] = 0;    // Wait for up to 1s (10 deciseconds), returning as soon as any data is received.
+    tty.c_cc[VMIN] = 1;
+
+    // Set in/out baud rate to be 9600
+    cfsetispeed(&tty, B9600);
+    cfsetospeed(&tty, B9600);
+
+    // Save tty settings, also checking for error
+    if (tcsetattr(serial_port, TCSANOW, &tty) != 0) {
+        printf("Error %i from tcsetattr: %s\n", errno, strerror(errno));
+        return false;
+    }
+    return true;
+}
+void send()
 {
-  strcpy(T2all_l[n], buffer);
-}
-*/
-void changebm() {
-    if (bm == 1) {
-        bm = 2;
-    } else {
-        bm = 1;
-    }
-}
-
-void send() {
-    char echos[70];
-    char tail[6];
-    std::ofstream myfile;
-
-    if (s == 1)// Sending T2
-    {
-        std::string msg = getmsgToSend();
-        strcpy(byte,
-               msg.c_str()); //In my original python script, the shape of T2all_l was quite different. However, I had to change like this. Now T2all_l stands for 1 line.
-        if (byte[0] == '-') {
-            printf("tail\n");
-            strcpy(tail, "tail");
-            sprintf(echos, "echo %s >  /dev/XBEE", tail);
-            system(echos); //Tail stands for the signal that one chunck is end.
-            //sleep(1); //We need to sleep when we observe '-'. This means it is the end of T2 chunk. We don't need this sleep when we receice data in real time.
-        } else {
-            printf("%s\n", byte);
-            myfile.open(" /dev/XBEE");
-            myfile << byte;
-            // sprintf(echos,"echo %s > /dev/ttyUSB0",byte); // When I send, I do not need to add \n. It is atomatically added when I receive each time.
-            //system(echos); I do not know why this is not working.
-            myfile.close();
-        }
-    } else //s is not 1, Sending SLEEPING
-    {
-        strcpy(byte, T2all_l[n]);
-        if (byte[0] == '-') {
-            printf("SLEEPING\n");
-            strcpy(byte, "SLEEPING\n");
-
-            myfile.open(" /dev/XBEE");
-            myfile << byte;
-            myfile.close();
-
-        }
-    }
-    n = n + 1; // n is keep going up regardless of send is sending sleeping or T2
-    if (bm == 1) {
-        strcpy(B1, byte);
-        strcpy(byte, empty);//We should have null string.
-    } else {
-        strcpy(B2, byte);
-        strcpy(byte, empty);
-    }
-    changebm();
+    char write_buf [256]; //WARNING : The last character must be change line character!
+    std::string msg=getmsgToSend();
+    strcpy(write_buf,msg.c_str());
+    write(serial_port, write_buf, sizeof(write_buf));
 }
 
 
-void readfromNear() {
-    char rbyte[100];
 
-
-    FILE *rfp = popen("cat /dev/XBEE", "r");
-
-    fgets(rbyte, sizeof(rbyte), rfp);//printf("%s : %d\n",rbyte, sizeof(rbyte));
-    printf("Size of rfp : %ld\n", sizeof(rfp));
-    printf("From NEAR : %s\n", rbyte);
-    if (rbyte[0] == 'S') {
-        s = 0;
-    } else if (rbyte[0] == 'T') {
-        s = 1;
-    } else //Initalize the buffer if I get the proper signal.
-    {
-        if (bm == 2) {
-            strcpy(B1, empty);
-        } else {
-            strcpy(B2, empty);
-        }
-    }
+std::string read()
+{
+    int num_bytes;
+    char read_buf [256];
+    num_bytes = read(serial_port, &read_buf, sizeof(read_buf));
+    std::string readN=read_buf;
+    return readN;
 }
+
+
+
 
 bool startXbee() {
-    printf("Let's Start!\n");
-    system("stty -F /dev/ttyUSB0 speed 9600 cs8 -cstopb -parenb");
-    while (!getRestart()) {
-        readfromNear();
+
+    serial_port = open(port.c_str(), O_RDWR);
+    if (!setup()) { return false; }
+    while(!getRestart()){
+        addmsgtoUnpack(read());
         send();
     }
-
-    return false;
+    return true;
 }
