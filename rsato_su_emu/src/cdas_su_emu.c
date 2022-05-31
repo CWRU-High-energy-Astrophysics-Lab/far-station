@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "cqueue.h"
 
 #define MAX_CLIENTS 5
@@ -26,9 +27,9 @@
 
  char t2buffer[20][0];
 
-node_t *t2q= NULL;
+
 char* id="66";
-char* port="/dev/EKIT";
+char* eport="/dev/EKIT";
 
 void use_as(char *cmd)
 {
@@ -143,7 +144,7 @@ int data_from_ub(struct ub_io_ctrl *ub,struct cdas_emu_str *cdas,
               strcat(catmsg,("%d %d:%d\n",
                      j,t2s->t2[j].tr_type,t2s->t2[j].usec));
 	      }
-          enqueue(t2q,catmsg);
+          enqueue(&t2q,catmsg);
 	      fprintf(cdas->t2out,"---\n"); // this is the line I need
           //T2msg newmsg= T2msg(catmsg);
 
@@ -178,7 +179,7 @@ int data_from_ub(struct ub_io_ctrl *ub,struct cdas_emu_str *cdas,
 
 
 
-int cdas_su_emu_main()
+int main()
 {
   struct ub_io_ctrl ub;
   struct cdas_emu_str cdas;
@@ -208,15 +209,15 @@ int cdas_su_emu_main()
   
 
   rid=atoi("66");
-  ub.fd_in=open(port,O_RDONLY);
-  ub.fd_out=open(port,O_WRONLY);
+  ub.fd_in=open(eport, O_RDONLY);
+  ub.fd_out=open(eport, O_WRONLY);
   printf(".... %d %d\n",ub.fd_in,ub.fd_out);
   if(isatty(ub.fd_in) && isatty(ub.fd_out)){
     close(ub.fd_in);
     close(ub.fd_out);    
-    ub=ub_io_init(port,rid,B38400); /* device and radio id */
+    ub=ub_io_init(eport, rid, B38400); /* device and radio id */
   } else {
-    ub=ub_io_init_fifo(port,port,rid); /* device and radio id */
+    ub=ub_io_init_fifo(eport, eport, rid); /* device and radio id */
   } 
 
   serv_ctrl=make_socket_server ("localhost",20000);
@@ -341,6 +342,4 @@ int cdas_su_emu_main()
   }
 
 }
-char* getT2Fromcdas(){
-    return dequeue(t2q);
-}
+

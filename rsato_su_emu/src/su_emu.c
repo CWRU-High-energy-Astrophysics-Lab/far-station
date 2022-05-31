@@ -24,7 +24,7 @@ void su_emu_use_as(char *cmd)
   exit(0);
 }
 
-int su_emu_main(int argc,char *argv[])
+int main(int argc,char *argv[])
 {
   struct ub_io_ctrl ub;
   struct pack packs[30];
@@ -41,7 +41,7 @@ int su_emu_main(int argc,char *argv[])
        strcmp(argv[1],"-?")==0 ||
        strcmp(argv[1],"-help")==0 ||
        strcmp(argv[1],"--help")==0)))
-    use_as(argv[0]);
+    su_emu_use_as(argv[0]);
   
   i=atoi(argv[3]);
   ub.fd_in=open(argv[1],O_RDONLY);

@@ -8,7 +8,7 @@
 
 class T2msg : public Generalmsg{
 public:
-    explicit T2msg(string payload);
+    explicit T2msg(std::string payload);
 
 
 };

@@ -6,8 +6,7 @@
 
 #include <utility>
 
-using namespace std;
-T3msg::T3msg( string payload) : Generalmsg("T3LI", "rev1", std::move(payload),10) {
+T3msg::T3msg( std::string payload) : Generalmsg("T3LI", "rev1", std::move(payload),10) {
 
 
 }

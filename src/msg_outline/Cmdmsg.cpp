@@ -9,6 +9,6 @@
 // CMDB = bash command
 //CMDA = os9
 
-Cmdmsg::Cmdmsg(string cmd, char type) : Generalmsg(&"CMD"[type], "Rev1", std::move(cmd),5) {
+Cmdmsg::Cmdmsg(std::string cmd, char type) : Generalmsg(&"CMD"[type], "Rev1", std::move(cmd),5) {
 
 }

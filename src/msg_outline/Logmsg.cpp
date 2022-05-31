@@ -6,8 +6,8 @@
 
 #include <utility>
 
-using namespace std;
-Logmsg::Logmsg( string payload) : Generalmsg("LOGA", "rev1", std::move(payload),1) {
+
+Logmsg::Logmsg( std::string payload) : Generalmsg("LOGA", "rev1", std::move(payload),1) {
 
 
 }

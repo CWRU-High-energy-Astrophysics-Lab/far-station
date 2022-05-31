@@ -11,7 +11,7 @@
 
 struct ub_io_ctrl
 {
-  int fd_in,fd_out; /*it is to allow use of FIFO instead of serial port */
+  int fd_in,fd_out; /*it is to allow use of FIFO instead of serial eport */
   int fifo;
   char fname_in[50],fname_out[50];
   struct stream_info out;

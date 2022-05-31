@@ -34,11 +34,11 @@ int ub_OpenSerialPort(char * TerminalPort,int baud)
   
   fd = open(TerminalPort, O_RDWR | O_NOCTTY | O_NONBLOCK);
   if (fd < 0) {
-    printf("Error opening serial port!\n");
+    printf("Error opening serial eport!\n");
     exit(-1);
   }
   // Configure SerialPort
-  tcgetattr(fd,&oldtio); // Keep the current config port.
+  tcgetattr(fd,&oldtio); // Keep the current config eport.
   bzero(&newtio, sizeof(newtio)); // Clean for the new config.
   newtio.c_cflag = baud  | CS8 | CLOCAL | CREAD; //it is the radio configuration ...
   newtio.c_iflag = IGNPAR;// | ICRNL;

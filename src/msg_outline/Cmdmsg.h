@@ -9,7 +9,7 @@
 
 class Cmdmsg : public Generalmsg{
 public:
-    Cmdmsg(string cmd, char type);
+    Cmdmsg(std::string cmd, char type);
 };
 
 

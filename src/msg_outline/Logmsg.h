@@ -8,7 +8,7 @@
 
 class Logmsg : public Generalmsg{
 public:
-    explicit Logmsg(string payload);
+    explicit Logmsg(std::string payload);
 
 };
 

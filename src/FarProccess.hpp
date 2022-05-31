@@ -13,7 +13,8 @@
 #include "msg_outline/Cmdmsg.h"
 #include "msg_outline/MsgHistory.h"
 #include "msg_outline/Logmsg.h"
-extern "C"{
+
+extern "C" {
 #include "../rsato_su_emu/src/cdas_calls.h"
 }
 
@@ -23,59 +24,61 @@ extern "C"{
 
 #endif //FAR_STATION_ROBIN_EAD_H
 
-using namespace std;
-priority_queue<Generalmsg> msgToProccess;
-priority_queue<Generalmsg> msgToPack;
-priority_queue<string> msgToSend;
-priority_queue<string> msgToUnPack
-;
+
+std::priority_queue<Generalmsg> msgToProccess;
+std::priority_queue<Generalmsg> msgToPack;
+std::priority_queue<std::string> msgToSend;
+std::priority_queue<std::string> msgToUnPack;
+
 bool msgtoProccessEmpty();
-string encrypt(const Generalmsg& msg) ;
-Generalmsg decrypt(const string& msg);
+
+std::string encrypt(const Generalmsg &msg);
+
+Generalmsg decrypt(const std::string &msg);
+
 bool send_t3();
 
 bool fpt();
 
 
-class FarProccess{
-public:
-    static void addmsgtoPack(const char msg[]);
+namespace farProccess {
+
     char *const EKITPORT = getenv("EKITPORT"); //enviormental varible
 
     int USB{};
 
 
-int start();
+    int start();
 
 //comands to cdas
-[[nodiscard]] string startCDAS() const;
-[[nodiscard]] string startDataCollection() const;
-[[nodiscard]] string rebootStation() const;
-[[nodiscard]] string rebootBrodcast() const;
-[[nodiscard]] string t3Random() const;
-[[nodiscard]] string t3Time(const basic_string<char>& time) const;
-[[nodiscard]] string os9cmd(const string& cmd) const;
-[[nodiscard]] string stopCDAS() const;
+    std::string startCDAS();
 
+     std::string startDataCollection() ;
 
+    std::string rebootStation() ;
 
-static Generalmsg getmsgToProccess();
+   std::string rebootBrodcast() ;
 
+     std::string t3Random() ;
 
+    std::string t3Time(const std::basic_string<char> &time) ;
 
+    std::string os9cmd(const std::string &cmd) ;
 
+     std::string stopCDAS();
+
+    static void addmsgtoPack(Generalmsg outgoing);
+
+    static Generalmsg getmsgToProccess();
 
 
 //piCommand
-static int bashCmd(const string& cmd);
+    static int bashCmd(const std::string &cmd);
 
 
+    std::string getT2();
 
-string getT2();
-
-string getT3();
-
-
+    std::string getT3();
 
 
 };

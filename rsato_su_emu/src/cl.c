@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "sockets.h"
-cl_main(int argc,char *argv[])
+main(int argc,char *argv[])
 {
   int sock,n,aux;
   unsigned char msg[102];

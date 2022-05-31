@@ -9,14 +9,14 @@
 class MsgHistory: public Generalmsg{
 public:
     MsgHistory();
-    explicit MsgHistory(string payload);
-    void addMSG(const string& id, int size );
+    explicit MsgHistory(std::string payload);
+    void addMSG(const std::string& id, int size );
 
 
 
 
 private:
-    string msglist; // format: id:size \n id:size \n
+    std::string msglist; // format: id:size \n id:size \n
 
 
 };

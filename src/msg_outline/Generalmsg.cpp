@@ -10,15 +10,15 @@ unsigned long Generalmsg::getSize() const {
     return payload.length(); //one character is one byte
 }
 
-string Generalmsg::gedID() const {
+std::string Generalmsg::getID() const {
     return id;
 }
 
-string Generalmsg::getRev() const {
+std::string Generalmsg::getRev() const {
     return rev;
 }
 
-Generalmsg::Generalmsg(string id, string rev, string payload, int weight) {
+Generalmsg::Generalmsg(std::string id, std::string rev, std::string payload, int weight) {
     this->id = std::move(id);
     this->rev = std::move(rev);
     this->payload = std::move(payload);
@@ -26,7 +26,7 @@ Generalmsg::Generalmsg(string id, string rev, string payload, int weight) {
 
 }
 
-string Generalmsg::getPayload() const {
+std::string Generalmsg::getPayload() const {
     return payload;
 }
 
@@ -35,5 +35,3 @@ Generalmsg::Generalmsg() = default;
 int Generalmsg::getweight() const{
     return weight;
 }
-
-

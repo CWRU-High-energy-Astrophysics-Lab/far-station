@@ -17,12 +17,12 @@
 void su_bsu_emu_use_as(char *cmd)
 {
   printf("Use as: \n"
-	 "%s <Pm Address> <Pm Port> <BSU ID> <radio id> <serial port device>\n"
+	 "%s <Pm Address> <Pm Port> <BSU ID> <radio id> <serial eport device>\n"
 	 "\n<Pm Address> <Pm Port> - are the address and Port\n"
 	 "<BSU ID> is the Id of BSU which would be recognized by Pm \n"
 	 "<radio id> - it is just for the UB to identify the radio \n"
-	 "<serial port device> - If it is not a serial port, one might use\n"
-	 "     FIFO instead of serial port. In this case, the program will \n"
+	 "<serial eport device> - If it is not a serial eport, one might use\n"
+	 "     FIFO instead of serial eport. In this case, the program will \n"
 	 "     need one additional parameter which will corresponding to   \n"
 	 "     the name of FIFO which will be the output for the radio  \n"
 	 "     to program try to evaluate if the file is a tty type \n"
@@ -33,7 +33,7 @@ void su_bsu_emu_use_as(char *cmd)
   exit(0);
 }
 
-int su_bsu_emu_main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
   struct ub_io_ctrl ub;
   struct pm_ctrl pm;
@@ -59,13 +59,13 @@ int su_bsu_emu_main(int argc, char *argv[])
   
   if(PM_conn_init(&pm)<0){
     printf("Some problem to connect with Pm:\n");
-    printf("Check Pm address and port ... (addr,port)=(%s,%d)\n",
+    printf("Check Pm address and eport ... (addr,eport)=(%s,%d)\n",
 	   pm.ServerAddr,pm.port);
     return(1);
   }
   printf("PM Started ...\n");
   i=atoi(argv[4]);
-  /*this is just to evaluate if it if a serial port or not */
+  /*this is just to evaluate if it if a serial eport or not */
   fd=open(argv[5],O_RDONLY | O_NONBLOCK);
   if(fd<0){
     printf("Not possible to open the file %s\n",argv[5]);
