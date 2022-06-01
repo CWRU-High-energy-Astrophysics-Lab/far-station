@@ -90,6 +90,7 @@ std::string t2_gen() {
 int msggenmain() {
     while (!getRestart()){
         if(gettingt2()){
+            std::cout<< "testpoint1"<< std::endl;
             addmsgtoSend(t2_gen());
         }
     }
