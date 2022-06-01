@@ -91,8 +91,8 @@ int msggenmain() {
     while (!getRestart()){
 
         if(gettingt2()){
-
-            addmsgtoSend(t2_gen());
+            T2msg msg = T2msg(t2_gen())
+            addmsgtoSend();
         }
     }
 
