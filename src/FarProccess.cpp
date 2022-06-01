@@ -28,7 +28,7 @@ bool getRestart(){
     return restartingpi;
 }
 bool gettingt2(){
-    return gettingt2();
+    return t2ing;
 }
 bool init() { //set baud rates and check file system layout
     msgToProccess = std::priority_queue<Generalmsg>();
