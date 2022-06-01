@@ -67,7 +67,7 @@ namespace farProccess {
 
      std::string stopCDAS();
 
-    static void addmsgtoPack(Generalmsg outgoing);
+
 
     static Generalmsg getmsgToProccess();
 

@@ -195,7 +195,7 @@ Generalmsg farProccess::getmsgToProccess() {
 }
 
 // functions to msgToPack
-void farProccess::addmsgtoPack(Generalmsg outgoing) {
+void addmsgtoPack(Generalmsg outgoing) {
     mu2.lock();
     msgToPack.push(outgoing);
     mu2.unlock();

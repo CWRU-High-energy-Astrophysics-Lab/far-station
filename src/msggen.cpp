@@ -91,8 +91,8 @@ int msggenmain() {
     while (!getRestart()){
 
         if(gettingt2()){
-            T2msg msg = T2msg(t2_gen())
-            addmsgtoSend();
+            T2msg msg = T2msg(t2_gen());
+            addmsgtoPack(msg);
         }
     }
 
