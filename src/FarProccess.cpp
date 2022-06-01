@@ -147,7 +147,7 @@ int farProccess::start() {
         // get t2 file
         auto out = getmsgToPack();
         if(!out.empty()){
-            std::cout<< "testpoint1"<<std::endl;
+
             addmsgtoSend(out);}
         std::filesystem::current_path(user);
 
@@ -211,7 +211,7 @@ std::string getmsgToPack() {
 
     std::string pack;
     if(!msgToPack.empty()){
-        std::cout<< "testpoint6"<< std::endl;
+
         pack = encrypt(msgToPack.top());
         msgToPack.pop();
     }
@@ -234,7 +234,7 @@ std::string getmsgToSend() {
     mu3.lock();
     std::string pack;
     if (!msgToSend.empty()) {
-        std::cout<< "testpoint2"<< std::endl;
+
         pack = msgToSend.top();
         msgToSend.pop();
     }
