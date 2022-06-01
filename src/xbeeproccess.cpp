@@ -48,7 +48,7 @@ bool setup() {
     tty.c_cflag &= ~CRTSCTS; // Disable RTS/CTS hardware flow control (most common)
     tty.c_cflag |= CREAD | CLOCAL; // Turn on READ & ignore ctrl lines (CLOCAL = 1)
 
-    tty.c_lflag &= ~ICANON;
+    tty.c_lflag &= ICANON;
     tty.c_lflag &= ~ECHO; // Disable echo
     tty.c_lflag &= ~ECHOE; // Disable erasure
     tty.c_lflag &= ~ECHONL; // Disable new-line echo
