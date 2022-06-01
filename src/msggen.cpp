@@ -81,7 +81,7 @@ std::string t2_gen() {
 
 
 
-
+    std::cout<<msg<<std::endl;
 
     return msg;
 }
