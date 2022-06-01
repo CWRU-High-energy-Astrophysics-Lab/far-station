@@ -120,7 +120,7 @@ std::string read()
                 std::cerr << "Message too long!" << std::endl;
                 return "";
             } else {
-
+                std::cout<<"this char: " << current << std::endl;
                 res.append(1,current);
 
                 ++total_bytes;
