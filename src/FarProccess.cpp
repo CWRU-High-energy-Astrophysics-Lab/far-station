@@ -116,6 +116,11 @@ int farProccess::start() {
                 send_t3();
                 delete msg;*/
                 std::cout<< type<< std::endl;
+                std::ofstream myfile;
+                myfile.open("t3.txt", std::ios::app);
+                myfile << encrypt(msg)<<'\n' ;
+                myfile.flush();
+                myfile.close();
             } else if (type.substr(0, 2) == "CMD") {
                 Cmdmsg *msg = dynamic_cast<Cmdmsg *>(msg);
                 if (msg->getID() == "CMDB") {// is os9 command
