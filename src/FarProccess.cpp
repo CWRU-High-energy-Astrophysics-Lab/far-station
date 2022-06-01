@@ -61,13 +61,14 @@ bool init() { //set baud rates and check file system layout
 int main() {//this is called on pi boot
     if (init()) {
 
-        std::thread processThread(fpt);
+        //std::thread processThread(fpt);
         std::thread cdasThread(msggenmain);
         //Xbee thread
         std::thread xbeeThread(xbeeLoop);
 
         xbeeThread.join();
-        processThread.join();
+        //processThread.join();
+        cdasThread.join();
 
 
 
@@ -89,7 +90,7 @@ bool fpt() {
 int farProccess::start() {
 
     while (!restartingpi) {
-        std::cout<< "testpoint3"<< std::endl;
+
         std::string msg = getmsgToUnpack();
 
 
