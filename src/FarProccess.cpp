@@ -62,7 +62,7 @@ int main() {//this is called on pi boot
     if (init()) {
 
         std::thread processThread(fpt);
-        //std::thread cdasThread(farProccess::startCDAS());
+        std::thread cdasThread(msg);
         //Xbee thread
         std::thread xbeeThread(xbeeLoop);
 

@@ -11,3 +11,4 @@ std::string getmsgToPack();
 std::string getmsgToUnpack();
 void addmsgtoSend(std::basic_string<char> outgoing);
 bool gettingt2();
+int msggenmain();
