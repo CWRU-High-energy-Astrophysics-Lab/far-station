@@ -62,7 +62,7 @@ bool setup() {
     // tty.c_oflag &= ~ONOEOT; // Prevent removal of C-d chars (0x004) in output (NOT PRESENT ON LINUX)
 
     tty.c_cc[VTIME] = 0;    // Wait for up to 1s (10 deciseconds), returning as soon as any data is received.
-    tty.c_cc[VMIN] = 1;
+    tty.c_cc[VMIN] = 0;
 
     // Set in/out baud rate to be 9600
     cfsetispeed(&tty, B9600);
@@ -105,18 +105,13 @@ std::string read()
     int total_bytes = 0;
     char current;
 
-    // reads one byte from the serial eport at a time
+    // reads one byte from the serial port at a time
     // exits once a newline is reached or there are no more bytes to read in the buffer.
-    int exit = 0;
-    while(exit<5) {
-        std::cout<< exit<< std::endl;
-        int rbytes=read(serial_port, &current, 1);
-        std::cout<< "testpoint5"<< std::endl;
-        if(rbytes>0) {
-            exit =0;
-            std::cout<< exit<< std::endl;
+    while(true) {
+        if(read(serial_port, &current, 1)!=0) {
+
             // done if we see a newline or a null termination
-            if( current == '\0' ) {
+            if( current == '\0') {
 
                 break;
             } else if(total_bytes >= k_max_msg_len) {
@@ -125,16 +120,14 @@ std::string read()
                 std::cerr << "Message too long!" << std::endl;
                 return "";
             } else {
-                std::cout<<"this char: "<< std::endl;
+
                 res.append(1,current);
 
                 ++total_bytes;
             }
         } else {
-
             break;
         }
-        exit++;
     }
 
     // shrink the string down in order to conserve memory
