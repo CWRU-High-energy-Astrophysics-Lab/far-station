@@ -105,6 +105,7 @@ int farProccess::start() {
         if (!msgtoProccessEmpty()) {
             Generalmsg msg = getmsgToProccess();
             std::string type = msg.getID();
+            std::cout<< type<<std::endl;
             if (type == "T3LI") {
                 T3msg *msg = dynamic_cast<T3msg *>(msg);
 

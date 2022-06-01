@@ -83,7 +83,7 @@ void send()
     myfile << msg ;
     myfile.flush();
     myfile.close();
-    std::cout<< "testpoint5"<< std::endl;
+
     write(serial_port, static_cast< const void*>(msg.c_str()), msg.size() + 1);
 
 }
