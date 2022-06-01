@@ -61,13 +61,13 @@ bool init() { //set baud rates and check file system layout
 int main() {//this is called on pi boot
     if (init()) {
 
-        //std::thread processThread(fpt);
+        std::thread processThread(fpt);
         std::thread cdasThread(msggenmain);
         //Xbee thread
-        //std::thread xbeeThread(xbeeLoop);
+        std::thread xbeeThread(xbeeLoop);
 
-        //xbeeThread.join();
-        //processThread.join();
+        xbeeThread.join();
+        processThread.join();
         cdasThread.join();
 
 
