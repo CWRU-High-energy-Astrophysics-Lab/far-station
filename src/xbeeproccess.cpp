@@ -78,7 +78,8 @@ bool setup() {
 void send()
 {
     std::string msg=getmsgToSend();
-    std::cout<<msg<<std::endl;
+    std::cout<<"testsend"<<std::endl;
+
     write(serial_port, static_cast< const void*>(msg.c_str()), msg.size() + 1);
 
 }
