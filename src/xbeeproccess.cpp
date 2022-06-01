@@ -110,7 +110,8 @@ std::string read()
     int exit = 0;
     while(exit<5) {
         std::cout<< exit<< std::endl;
-        if(read(serial_port, &current, 1)!=0) {
+        int rbytes=read(serial_port, &current, 1);
+        if(rbytes>0) {
             exit =0;
             std::cout<< exit<< std::endl;
             // done if we see a newline or a null termination
@@ -129,9 +130,10 @@ std::string read()
                 ++total_bytes;
             }
         } else {
-            exit++;
+
             break;
         }
+        exit++;
     }
 
     // shrink the string down in order to conserve memory
