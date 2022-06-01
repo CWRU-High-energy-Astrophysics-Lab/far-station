@@ -105,16 +105,17 @@ int farProccess::start() {
         if (!msgtoProccessEmpty()) {
             Generalmsg msg = getmsgToProccess();
             std::string type = msg.getID();
-            std::cout<< type<<std::endl;
+
             if (type == "T3LI") {
-                T3msg *msg = dynamic_cast<T3msg *>(msg);
+                /*T3msg *msg = dynamic_cast<T3msg *>(msg);
 
                 t3Time(msg->getPayload()); // calls cdas to send t3 for time
 
 
                 //execute t3 collection
                 send_t3();
-                delete msg;
+                delete msg;*/
+                std::cout<< type<< std::endl;
             } else if (type.substr(0, 2) == "CMD") {
                 Cmdmsg *msg = dynamic_cast<Cmdmsg *>(msg);
                 if (msg->getID() == "CMDB") {// is os9 command
@@ -338,7 +339,7 @@ std::string encrypt(const Generalmsg& generalmsg) {
 
 Generalmsg decrypt(const std::string& input) {
     Generalmsg msg;
-    std::cout<< input <<std::endl;
+
     std::string type = input.substr(0, 4);
     unsigned long headerend = input.find(':');
     try {
