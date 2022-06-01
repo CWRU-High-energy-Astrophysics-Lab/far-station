@@ -64,9 +64,9 @@ int main() {//this is called on pi boot
         //std::thread processThread(fpt);
         std::thread cdasThread(msggenmain);
         //Xbee thread
-        std::thread xbeeThread(xbeeLoop);
+        //std::thread xbeeThread(xbeeLoop);
 
-        xbeeThread.join();
+        //xbeeThread.join();
         //processThread.join();
         cdasThread.join();
 
