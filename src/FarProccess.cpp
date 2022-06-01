@@ -146,7 +146,7 @@ int farProccess::start() {
         }
         // get t2 file
 
-        addmsgtoSend(getmsgToPack())
+        addmsgtoSend(getmsgToPack());
         std::filesystem::current_path(user);
 
 
