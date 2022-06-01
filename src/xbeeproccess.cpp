@@ -110,7 +110,8 @@ std::string read()
     int exit = 0;
     while(exit<5) {
         if(read(serial_port, &current, 1)!=0) {
-            std::cout<< "testpoint6"<< std::endl;
+            exit =0;
+            std::cout<< exit<< std::endl;
             // done if we see a newline or a null termination
             if( current == '\0' ) {
 
@@ -127,6 +128,7 @@ std::string read()
                 ++total_bytes;
             }
         } else {
+            exit++;
             break;
         }
     }
