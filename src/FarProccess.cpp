@@ -220,7 +220,7 @@ std::string getmsgToPack() {
 //function to msgToSend
 void addmsgtoSend(std::string outgoing) {
     mu3.lock();
-
+    std::cout<< "testpoint2"<< std::endl;
     msgToSend.push(outgoing);
     mu3.unlock();
 
