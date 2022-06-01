@@ -199,6 +199,8 @@ Generalmsg farProccess::getmsgToProccess() {
 // functions to msgToPack
 void addmsgtoPack(Generalmsg outgoing) {
     mu2.lock();
+
+    std::cout<< "testpoint2"<< std::endl;
     msgToPack.push(outgoing);
     mu2.unlock();
 
@@ -220,7 +222,7 @@ std::string getmsgToPack() {
 //function to msgToSend
 void addmsgtoSend(std::string outgoing) {
     mu3.lock();
-    std::cout<< "testpoint2"<< std::endl;
+
     msgToSend.push(outgoing);
     mu3.unlock();
 
