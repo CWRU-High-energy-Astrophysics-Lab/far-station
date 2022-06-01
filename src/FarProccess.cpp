@@ -145,8 +145,10 @@ int farProccess::start() {
 
         }
         // get t2 file
-
-        addmsgtoSend(getmsgToPack());
+        auto out = getmsgToPack();
+        if(!out.empty()){
+            std::cout<< "testpoint1"<<std::endl;
+            addmsgtoSend(out);}
         std::filesystem::current_path(user);
 
 
