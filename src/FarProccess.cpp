@@ -214,7 +214,7 @@ std::string getmsgToPack() {
 //function to msgToSend
 void addmsgtoSend(std::string outgoing) {
     mu3.lock();
-    std::cout<< outgoing << std::endl;
+
     msgToSend.push(outgoing);
     mu3.unlock();
 
@@ -224,10 +224,12 @@ std::string getmsgToSend() {
     mu3.lock();
     std::string pack;
     if (!msgToSend.empty()) {
+        std::cout<< "testpoint2"<< std::endl;
         pack = msgToSend.top();
         msgToSend.pop();
     }
     mu3.unlock();
+
     return pack;
 
 }
