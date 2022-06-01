@@ -43,10 +43,10 @@ bool init() { //set baud rates and check file system layout
         std::filesystem::current_path(user+"/data/t3");
         std::filesystem::current_path(user+"/data/log");
 
-        std::filesystem::current_path(user+"/rsato_su_emu");
+        /*std::filesystem::current_path(user+"/rsato_su_emu");
         std::filesystem::current_path(user+"/rsato_su_emu/bin");
         std::filesystem::current_path(user+"/rsato_su_emu/src");
-        system("make");
+        system("make");*/
 
         std::filesystem::current_path(user);
     }
