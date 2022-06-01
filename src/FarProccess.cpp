@@ -208,9 +208,10 @@ void addmsgtoPack(Generalmsg outgoing) {
 
 std::string getmsgToPack() {
     mu2.lock();
-    std::cout<< "testpoint6"<< std::endl;
+
     std::string pack;
     if(!msgToSend.empty()){
+        std::cout<< "testpoint6"<< std::endl;
         pack = encrypt(msgToPack.top());
         msgToPack.pop();
     }
