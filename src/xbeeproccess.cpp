@@ -107,8 +107,8 @@ std::string read()
 
     // reads one byte from the serial eport at a time
     // exits once a newline is reached or there are no more bytes to read in the buffer.
-    while(1) {
-        if(read(serial_port, &current, 1)!=0) {
+    while(read(serial_port, &current, 1)!=0) {
+
 
             // done if we see a newline or a null termination
             if( current == '\0' ) {
@@ -125,10 +125,7 @@ std::string read()
 
                 ++total_bytes;
             }
-        } else {
-            break;
         }
-    }
 
     // shrink the string down in order to conserve memory
     res.shrink_to_fit();
