@@ -200,7 +200,7 @@ Generalmsg farProccess::getmsgToProccess() {
 void addmsgtoPack(Generalmsg outgoing) {
     mu2.lock();
 
-    std::cout<< "testpoint5"<< std::endl;
+    std::cout<< msgToPack.size()<< std::endl;
     msgToPack.push(outgoing);
     mu2.unlock();
 
