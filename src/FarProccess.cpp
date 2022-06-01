@@ -200,7 +200,7 @@ Generalmsg farProccess::getmsgToProccess() {
 void addmsgtoPack(Generalmsg outgoing) {
     mu2.lock();
 
-    std::cout<< "testpoint2"<< std::endl;
+    std::cout<< "testpoint5"<< std::endl;
     msgToPack.push(outgoing);
     mu2.unlock();
 
@@ -208,6 +208,7 @@ void addmsgtoPack(Generalmsg outgoing) {
 
 std::string getmsgToPack() {
     mu2.lock();
+    std::cout<< "testpoint6"<< std::endl;
     std::string pack;
     if(!msgToSend.empty()){
         pack = encrypt(msgToPack.top());
