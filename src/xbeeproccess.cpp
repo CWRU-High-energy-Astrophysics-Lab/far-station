@@ -111,7 +111,7 @@ std::string read()
         if(read(serial_port, &current, 1)) {
 
             // done if we see a newline or a null termination
-            if( current == '\0') {
+            if( current == '\0' || current== '') {
 
                 break;
             } else if(total_bytes >= k_max_msg_len) {
@@ -120,7 +120,7 @@ std::string read()
                 std::cerr << "Message too long!" << std::endl;
                 return "";
             } else {
-                std::cout<<"this char: " << sizeof(current)<< std::endl;
+                std::cout<<"this char: "<< std::endl;
                 res.append(1,current);
 
                 ++total_bytes;
