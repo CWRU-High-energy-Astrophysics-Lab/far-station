@@ -21,10 +21,14 @@ std::mutex mu3;
 std::mutex mu4;
 std::mutex mu5;
 bool restartingpi = false;
+bool t2ing = false;
 std::string user;
 
 bool getRestart(){
     return restartingpi;
+}
+bool gettingt2(){
+    return gettingt2();
 }
 bool init() { //set baud rates and check file system layout
     msgToProccess = std::priority_queue<Generalmsg>();
@@ -138,8 +142,8 @@ int farProccess::start() {
 
         }
         // get t2 file
-        auto temp = T2msg(getT2Fromcdas());
-        addmsgtoPack(temp);
+
+
         std::filesystem::current_path(user);
 
 

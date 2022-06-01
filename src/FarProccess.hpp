@@ -13,10 +13,10 @@
 #include "msg_outline/Cmdmsg.h"
 #include "msg_outline/MsgHistory.h"
 #include "msg_outline/Logmsg.h"
-
+/*
 extern "C" {
 #include "../rsato_su_emu/src/cdas_calls.h"
-}
+}*/
 
 
 #ifndef FAR_STATION_ROBIN_EAD_H

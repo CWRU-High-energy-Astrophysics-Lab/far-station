@@ -9,4 +9,5 @@
 void addmsgtoProccess(std::string incoming);
 std::string getmsgToPack();
 std::string getmsgToUnpack();
-void addmsgtoSend(std::string outgoing);
+void addmsgtoSend(std::basic_string<char> outgoing);
+bool gettingt2();
