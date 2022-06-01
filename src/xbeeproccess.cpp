@@ -143,9 +143,9 @@ bool xbeeLoop() {
         return false; }
     while(!getRestart()){
 
-        auto msg = read();
+        //auto msg = read();
 
-        addmsgtoUnpack(msg);
+        //addmsgtoUnpack(msg);
         send();
 
     }
