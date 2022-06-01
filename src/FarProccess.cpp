@@ -89,14 +89,16 @@ bool fpt() {
 int farProccess::start() {
 
     while (!restartingpi) {
+        std::cout<< "testpoint3"<< std::endl;
         std::string msg = getmsgToUnpack();
 
 
 
 
         if (!msg.empty()) {
+            std::cout<< "testpoint4"<< std::endl;
             addmsgtoProccess(msg);
-            // std::cout << msg<<std::endl;
+
 
         }
         if (!msgtoProccessEmpty()) {
