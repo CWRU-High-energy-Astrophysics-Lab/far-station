@@ -338,7 +338,7 @@ std::string encrypt(const Generalmsg& generalmsg) {
 
 Generalmsg decrypt(const std::string& input) {
     Generalmsg msg;
-    std::string type = input.substr(0, 3);
+    std::string type = input.substr(0, 4);
     unsigned long headerend = input.find(':');
     std::string payload = input.substr(headerend);
     if (type == "T3LI") {
