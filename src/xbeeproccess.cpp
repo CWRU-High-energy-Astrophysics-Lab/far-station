@@ -109,6 +109,7 @@ std::string read()
     // exits once a newline is reached or there are no more bytes to read in the buffer.
     int exit = 0;
     while(exit<5) {
+        std::cout<< exit<< std::endl;
         if(read(serial_port, &current, 1)!=0) {
             exit =0;
             std::cout<< exit<< std::endl;

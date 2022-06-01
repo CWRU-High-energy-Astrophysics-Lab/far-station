@@ -224,7 +224,7 @@ std::string getmsgToPack() {
 //function to msgToSend
 void addmsgtoSend(std::string outgoing) {
     mu3.lock();
-    std::cout<< msgToSend.size()<<std::endl;
+    //std::cout<< msgToSend.size()<<std::endl;
     msgToSend.push(outgoing);
     mu3.unlock();
 
