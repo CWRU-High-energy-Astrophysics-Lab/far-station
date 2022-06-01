@@ -21,7 +21,7 @@ std::mutex mu3;
 std::mutex mu4;
 std::mutex mu5;
 bool restartingpi = false;
-bool t2ing = false;
+bool t2ing = true;
 std::string user;
 
 bool getRestart(){
