@@ -97,7 +97,7 @@ int farProccess::start() {
 
 
         if (!msg.empty()) {
-            std::cout<< "testpoint4"<< std::endl;
+
             addmsgtoProccess(msg);
 
 

@@ -78,7 +78,11 @@ bool setup() {
 void send()
 {
     std::string msg=getmsgToSend();
-    std::cout<<"testsend"<<std::endl;
+    std::ofstream myfile;
+    myfile.open("send.txt", std::ios::app);
+    myfile << msg ;
+    myfile.flush();
+    myfile.close();
 
     write(serial_port, static_cast< const void*>(msg.c_str()), msg.size() + 1);
 
