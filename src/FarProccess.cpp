@@ -38,10 +38,10 @@ bool init() { //set baud rates and check file system layout
      user= "/home/"+ std::string(getenv("USER"));
     try{
         std::filesystem::current_path(user);
-        std::filesystem::current_path(user+"/data");
-        std::filesystem::current_path(user+"/data/t2");
-        std::filesystem::current_path(user+"/data/t3");
-        std::filesystem::current_path(user+"/data/log");
+        //std::filesystem::current_path(user+"/data");
+        //std::filesystem::current_path(user+"/data/t2");
+        //std::filesystem::current_path(user+"/data/t3");
+        //std::filesystem::current_path(user+"/data/log");
 
         /*std::filesystem::current_path(user+"/rsato_su_emu");
         std::filesystem::current_path(user+"/rsato_su_emu/bin");
