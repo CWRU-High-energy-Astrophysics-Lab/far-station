@@ -178,7 +178,7 @@ bool send_t3(std::string timet3){
         currenttime = std::chrono::duration_cast<std::chrono::seconds>
                 (std::chrono::high_resolution_clock::now().time_since_epoch()).count();
         t3msg<< std::hex << (rand()% 256);
-        sleep(1);
+        std::this_thread::sleep_for(std::chrono::seconds(1));
         std::cout<< currenttime-starttime<< std::endl;
     }
     t3msg<< '\0';
