@@ -60,7 +60,7 @@ std::string t2_gen() {
         while (currentsec == std::to_string(std::chrono::duration_cast<std::chrono::microseconds>
                                                     (std::chrono::high_resolution_clock::now().time_since_epoch()).count()).substr(
                 0, 10)) {
-            if (rand() % 1000000 < 100) {
+            if (rand() % 10000000 < 100) {
                 auto timestamp = std::to_string(std::chrono::duration_cast<std::chrono::microseconds>
                                                         (std::chrono::high_resolution_clock::now().time_since_epoch()).count()).substr(
                         11);

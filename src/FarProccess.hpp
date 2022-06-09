@@ -36,7 +36,7 @@ std::string encrypt(const Generalmsg &msg);
 
 Generalmsg decrypt(const std::string &msg);
 
-bool send_t3();
+bool send_t3(std::string timet3);
 
 bool fpt();
 

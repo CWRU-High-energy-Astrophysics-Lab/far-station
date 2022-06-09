@@ -11,6 +11,8 @@
 #include <utility>
 #include "packinterface.h"
 #include "xbeeinterface.h"
+#include <random>
+#include <chrono>
 
 
 
@@ -23,6 +25,7 @@ std::mutex mu5;
 bool restartingpi = false;
 bool t2ing = true;
 std::string user;
+long lastt3time=0;
 
 bool getRestart(){
     return restartingpi;
@@ -115,7 +118,8 @@ int farProccess::start() {
                 //execute t3 collection
                 send_t3();
                 delete msg;*/
-                std::cout<< type<< std::endl;
+                std::cout<< "I got a t3"<< std::endl;
+                send_t3(msg.getPayload());
                 std::ofstream myfile;
                 myfile.open("t3.txt", std::ios::app);
                 myfile << encrypt(msg)<<'\n' ;
@@ -163,10 +167,25 @@ int farProccess::start() {
     return restartingpi;
 }
 
-bool send_t3(){
-    int size =0;
-
-    //read and put into general msg
+bool send_t3(std::string timet3){
+    t2ing= false;
+    auto currenttime = std::chrono::duration_cast<std::chrono::seconds>
+            (std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+    auto starttime = std::chrono::duration_cast<std::chrono::seconds>
+            (std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+    std::stringstream t3msg;
+    while (currenttime-starttime<120){
+        currenttime = std::chrono::duration_cast<std::chrono::seconds>
+                (std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+        t3msg<< std::hex << (rand()% 256);
+        sleep(1);
+        std::cout<< currenttime-starttime<< std::endl;
+    }
+    t3msg<< '\0';
+    std::cout<< t3msg.str()<< std::endl;
+    T3msg msg=T3msg(t3msg.str());
+    addmsgtoSend(encrypt(msg));
+    t2ing = true;
     return true;
 }
 
@@ -338,7 +357,7 @@ int farProccess::bashCmd(const std::string& cmd) {
 
 
 std::string encrypt(const Generalmsg& generalmsg) {
-    return std::string(generalmsg.getID() + "[" + generalmsg.getRev() + "]:" + std::to_string(generalmsg.getSize()) +
+    return std::string(generalmsg.getID() + "[" + generalmsg.getRev() + "]: " + std::to_string(generalmsg.getSize())+' ' +
                   generalmsg.getPayload()+'\0');
 }
 
