@@ -37,7 +37,7 @@ char* dequeue(node_t **head) {
     }
 
     retval = current->val;
-    free(current);
+ //free(current);
 
     if (prev)
         prev->next = NULL;
